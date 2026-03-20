@@ -15,24 +15,22 @@
         }
     </style>
 </head>
-<!-- 
-  Clases de Tailwind utilizadas:
-  bg-[#E3000F]: Color rojo estilo Colgate
-  h-screen: Ocupa toda la altura de la pantalla
-  w-full: Ocupa todo el ancho
-  flex items-center justify-center: Centra el contenido vertical y horizontalmente
--->
-<body class="bg-[#E3000F] h-screen w-full flex items-center justify-center m-0 overflow-hidden">
+<body class="bg-[#E3000F] h-screen w-full flex flex-col items-center justify-center relative m-0 overflow-hidden text-center px-6">
     
-    <!-- 
-      text-white: Texto blanco
-      text-7xl md:text-9xl: Tamaño de texto muy grande y responsivo
-      font-extrabold: Letra muy gruesa
-      tracking-tighter: Letras un poco más juntas (como en el logo real)
-    -->
-    <h1 class="text-white text-7xl md:text-[12rem] font-extrabold tracking-tighter select-none">
+    <!-- Logo de Colgate en la parte superior -->
+    <h1 class="absolute top-8 md:top-12 text-white text-5xl md:text-7xl font-extrabold tracking-tighter select-none">
         Colgate
     </h1>
+
+    <!-- Contenedor del mensaje central -->
+    <div class="flex flex-col items-center mt-12 md:mt-16">
+        <h2 class="text-white text-4xl md:text-6xl font-bold mb-6 drop-shadow-md">
+            página web en construcción...
+        </h2>
+        <p class="text-white text-xl md:text-3xl font-medium opacity-90 max-w-4xl leading-relaxed">
+            Este enlace redirigirá a la experiencia de realidad aumentada de PROTEX
+        </p>
+    </div>
 
 </body>
 </html>
