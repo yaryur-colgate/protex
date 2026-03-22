@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cámara Trasera y Carga Rápida</title>
+    <title>Protex</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,14 +85,14 @@
         .solo-texto {
             background-color: transparent;
             color: #002B5B;
-            font-size: 6rem; /* Hacemos los números más grandes para que destaquen */
+            font-size: 6rem;
             font-weight: bold;
             box-shadow: none;
             padding: 0;
         }
 
         #texto-overlay {
-            display: inline-block; /* Necesario para que el transform funcione en el span */
+            display: inline-block;
         }
 
         /* ANIMACIONES */
@@ -115,7 +115,7 @@
         }
 
         .animar-final {
-            animation: rebote-final-explora 1s forwards; /* forwards mantiene el estado final (invisible) */
+            animation: rebote-final-explora 1s forwards;
         }
 
     </style>
@@ -142,21 +142,19 @@
     <iframe id="pagina-oculta-iframe" src="https://mywebar.com/p/YarYurProtex" allow="camera; microphone"></iframe>
 
     <script>
-        // --- LÓGICA DEL IFRAME OCULTO Y CUENTA REGRESIVA ---
         const btnMostrar = document.getElementById('btn-mostrar');
         const contenedorPrincipal = document.getElementById('contenedor-principal');
         const iframeOculto = document.getElementById('pagina-oculta-iframe');
-        
-        // Elementos nuevos
         const overlayExperiencia = document.getElementById('overlay-experiencia');
         const textoOverlay = document.getElementById('texto-overlay');
         const pildoraUI = document.getElementById('pildora-ui');
+        const videoCamara = document.getElementById('video-camara');
 
+        // --- LÓGICA DEL IFRAME OCULTO Y CUENTA REGRESIVA ---
         btnMostrar.addEventListener('click', () => {
             contenedorPrincipal.style.display = 'none';
             iframeOculto.style.display = 'block';
             
-            // Mostramos la píldora con el texto inicial
             overlayExperiencia.style.display = 'block';
             
             window.addEventListener('blur', () => {
@@ -164,15 +162,12 @@
                     
                     let contador = 5;
                     
-                    // Cambiamos el estilo a solo texto para los números
                     pildoraUI.classList.remove('pildora');
                     pildoraUI.classList.add('solo-texto');
 
-                    // Función para actualizar y forzar el reinicio de la animación
                     const actualizarContador = (num) => {
                         textoOverlay.textContent = num;
                         textoOverlay.classList.remove('animar-rebote');
-                        // Forzamos un 'reflow' para que el navegador reinicie la animación CSS
                         void textoOverlay.offsetWidth;
                         textoOverlay.classList.add('animar-rebote');
                     };
@@ -187,61 +182,51 @@
                         } else {
                             clearInterval(intervalo); 
                             
-                            // Restauramos el estilo de píldora para "¡Explora!"
                             pildoraUI.classList.remove('solo-texto');
                             pildoraUI.classList.add('pildora');
                             textoOverlay.classList.remove('animar-rebote');
                             
                             textoOverlay.textContent = "¡Explora!";
                             
-                            // Aplicamos la animación de crecimiento y desvanecimiento al contenedor completo
                             pildoraUI.classList.add('animar-final');
                             
                             iframeOculto.style.opacity = '1'; 
                             
-                            // Esperamos a que termine la animación final para ocultar el overlay
                             setTimeout(() => {
                                 overlayExperiencia.style.display = 'none';
-                            }, 1000); // 1000ms coincide con la duración de 'rebote-final-explora'
+                            }, 1000); 
                         }
                     }, 1000); 
                 }
             }, { once: true });
         });
 
-        // --- LÓGICA DE LA CÁMARA TRASERA ---
-        const btnCamara = document.getElementById('btn-camara');
-        const videoCamara = document.getElementById('video-camara');
-
-        btnCamara.addEventListener('click', async () => {
+        // --- FUNCIÓN PARA INICIAR LA CÁMARA TRASERA ---
+        async function iniciarCamara() {
             try {
                 const restricciones = {
-                    video: {
-                        facingMode: "environment"
-                    }
+                    video: { facingMode: "environment" }
                 };
-
                 const stream = await navigator.mediaDevices.getUserMedia(restricciones);
                 
                 videoCamara.srcObject = stream;
                 videoCamara.style.display = 'block';
-                
-                btnCamara.textContent = "Cámara Trasera Activa";
-                btnCamara.disabled = true;
-                btnCamara.style.backgroundColor = "#95a5a6";
-                btnCamara.style.cursor = "default";
 
             } catch (error) {
-                alert('No se pudo acceder a la cámara trasera. Asegúrate de estar en un dispositivo móvil o de tener una conectada.');
                 console.error('Error de cámara:', error);
+                // Opcional: Mostrar un mensaje si el usuario deniega el permiso
             }
-        });
+        }
 
-        // --- AUTOCLIC DESPUÉS DE 1 SEGUNDO ---
+        // --- ACCIONES AL CARGAR LA PÁGINA ---
         window.addEventListener('load', () => {
+            // 1. Solicitamos permisos y abrimos la cámara de inmediato
+            iniciarCamara();
+
+            // 2. Ejecutamos el autoclic después de 1 segundo
             setTimeout(() => {
                 btnMostrar.click();
-            }, 1000); // 1000 ms = 1 segundo
+            }, 1000); // Considera aumentar este tiempo si quieres que se vea más la cámara inicial
         });
     </script>
 
