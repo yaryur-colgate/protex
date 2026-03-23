@@ -263,7 +263,14 @@
           <a-box class="clickable" atrapar-modelo width="2" height="2" depth="2" material="opacity: 0; transparent: true"></a-box>
           <a-entity gltf-model="#modelo3D_2" scale="0.6 0.6 0.3" position="0 0.1 0" animation-mixer></a-entity>
           
-          <a-entity id="modelo-mano" gltf-model="#modeloMano" scale="0.02 0.02 0.02" position="-0.1 0.4 0" rotation="20 180 180" animation-mixer></a-entity>
+<a-entity id="modelo-mano" 
+          gltf-model="#modeloMano" 
+          scale="0.02 0.02 0.02" 
+          position="-0.05 0.35 0" 
+          rotation="20 180 180" 
+          animation-mixer 
+          animation="property: position; from: -0.05 0.35 0; to: -0.05 0.45 0; dur: 800; dir: alternate; loop: true; easing: easeInOutQuad">
+</a-entity>
         </a-entity>
 
       </a-entity>
