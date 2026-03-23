@@ -144,6 +144,13 @@
             // Actualizamos la imagen de fondo según el número de toques
             if (this.toques === 1) {
               fondoImagen.setAttribute('src', '#img2');
+              
+              /* NUEVO: Ocultar la mano indicadora en el primer toque */
+              const manoIndicadora = document.querySelector('#modelo-mano');
+              if (manoIndicadora) {
+                manoIndicadora.setAttribute('visible', 'false');
+              }
+              
             } else if (this.toques === 2) {
               fondoImagen.setAttribute('src', '#img3');
             } else if (this.toques === 3) {
@@ -226,6 +233,9 @@
       <a-asset-item id="modelo3D" src="./protex.glb"></a-asset-item>
       <a-asset-item id="modelo3D_2" src="./protex2.glb"></a-asset-item>
       <a-asset-item id="modelo3D_3" src="./protex3.glb"></a-asset-item>
+      
+      <a-asset-item id="modeloMano" src="./mano.glb"></a-asset-item>
+      
       <audio id="mi-sonido" src="./sonido.mp3" preload="auto"></audio>
       
       <img id="img1" src="./imagen1.jpg">
@@ -252,6 +262,8 @@
         <a-entity id="contenedor-modelo2" position="-0.2 0 0.4">
           <a-box class="clickable" atrapar-modelo width="2" height="2" depth="2" material="opacity: 0; transparent: true"></a-box>
           <a-entity gltf-model="#modelo3D_2" scale="0.6 0.6 0.3" position="0 0.1 0" animation-mixer></a-entity>
+          
+          <a-entity id="modelo-mano" gltf-model="#modeloMano" scale="0.5 0.5 0.5" position="0.5 0.5 0.5" rotation="0 0 0" animation-mixer></a-entity>
         </a-entity>
 
       </a-entity>
